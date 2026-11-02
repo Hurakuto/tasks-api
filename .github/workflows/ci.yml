@@ -1,4 +1,4 @@
-name: ci
+name: Tests
 
 on: [push]
 
@@ -6,8 +6,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Afficher les informations
-        run: |
-          echo "Bonjour ! Le workflow GitHub Actions fonctionne parfaitement."
-          echo "Nom de la branche : ${{ github.ref_name }}"
-          echo "Auteur du commit : ${{ github.actor }}"
+      - name: Récupérer le code
+        uses: actions/checkout@v6
+      - name: Installer Python 3.12
+        uses: actions/setup-python@v7
+        with: 
+          python-version: "3.12"
+      - name: Installer les dépendances
+        run: pip install -r requirements-dev.txt
+      - name: Lancer les tests
+        run: pytest
