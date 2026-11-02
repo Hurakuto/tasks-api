@@ -1,0 +1,13 @@
+name: Hello Workflow
+
+on: [push]
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher les informations
+        run: |
+          echo "Bonjour ! Le workflow GitHub Actions fonctionne parfaitement."
+          echo "Nom de la branche : ${{ github.ref_name }}"
+          echo "Auteur du commit : ${{ github.actor }}"
