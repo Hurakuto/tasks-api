@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Flake8
-        run: flake8 -v .
+        run: flake8 .
       - name: Black
         run: black --check .
   test:
