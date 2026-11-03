@@ -5,14 +5,17 @@ on: [push, pull_request]
 jobs:
   lint:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: 
+        python-version: ["3.13", "3.12", "3.11"]
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v6
       - name: Installer Python 3.X
         uses: actions/setup-python@v7
         with:
-          matrix: 
-            python-version: ["3.13", "3.12", "3.11"]
+          python-version: ${{ matrix.python-version }}
       - name: Installer les dépendances
         run: pip install -r requirements-dev.txt
       - name: Flake8
@@ -22,14 +25,17 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: 
+        python-version: ["3.13", "3.12", "3.11"]
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v6
       - name: Installer Python 3.X
         uses: actions/setup-python@v7
         with:
-          matrix: 
-            python-version: ["3.13", "3.12", "3.11"]
+          python-version: ${{ matrix.python-version }}
       - name: Installer les dépendances
         run: pip install -r requirements-dev.txt
       - name: Lancer les tests et vérifier la couverture
