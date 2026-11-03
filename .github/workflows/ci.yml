@@ -8,10 +8,10 @@ jobs:
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v6
-      - name: Installer Python 3.12
+      - name: Installer Python 3.X
         uses: actions/setup-python@v7
         with:
-          python-version: "3.12"
+          python-version: ["3.13", "3.12", "3.11"]
       - name: Installer les dépendances
         run: pip install -r requirements-dev.txt
       - name: Flake8
@@ -24,10 +24,10 @@ jobs:
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v6
-      - name: Installer Python 3.12
+      - name: Installer Python 3.X
         uses: actions/setup-python@v7
         with:
-          python-version: "3.12"
+          python-version: ["3.13", "3.12", "3.11"]
       - name: Installer les dépendances
         run: pip install -r requirements-dev.txt
       - name: Lancer les tests et vérifier la couverture
