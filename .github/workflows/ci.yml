@@ -1,18 +1,45 @@
 name: Tests
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
-  test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Récupérer le code
         uses: actions/checkout@v6
-      - name: Installer Python 3.12
+      - name: Installer Python 3.X
         uses: actions/setup-python@v7
-        with: 
+        with:
           python-version: "3.12"
       - name: Installer les dépendances
         run: pip install -r requirements-dev.txt
-      - name: Lancer les tests
-        run: pytest
+      - name: Flake8
+        run: flake8 .
+      - name: Black
+        run: black --check .
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: 
+        python-version: ["3.13", "3.12", "3.11"]
+    steps:
+      - name: Récupérer le code
+        uses: actions/checkout@v6
+      - name: Installer Python 3.X
+        uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Installer les dépendances
+        run: pip install -r requirements-dev.txt
+      - name: Lancer les tests et vérifier la couverture
+        run: pytest --cov=app --cov-fail-under=80 --cov-report=xml
+      - if: matrix.python-version == '3.12'
+        name: Publier l'artefact et vérifier la couverture
+        uses: actions/upload-artifact@v7
+        with:
+          name: coverage-report
+          path: coverage.xml
