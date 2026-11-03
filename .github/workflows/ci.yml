@@ -6,8 +6,8 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: Flake8
-        run: flake8 .
+      - name: Flake8 
+        run: flake8 -v .
       - name: Black
         run: black --check .
   test:
