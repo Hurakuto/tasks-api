@@ -40,4 +40,4 @@ jobs:
       - name: Installer les dépendances
         run: pip install -r requirements-dev.txt
       - name: Lancer les tests et vérifier la couverture
-        run: pytest --cov=app --cov-fail-under=80
+        run: pytest --cov=app --cov-fail-under=80 
