@@ -40,6 +40,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/metadata-action@v6
+        id: meta
         with:
           tags: |
             type=sha,format=short
