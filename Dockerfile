@@ -30,4 +30,4 @@ USER user
 ARG APP_VERSION=dev
 ENV APP_VERSION=${APP_VERSION}
 EXPOSE 8000
-["gunicorn", "--bind", "0.0.0.0:8000", "app.main:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app.main:app"]
