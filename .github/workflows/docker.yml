@@ -42,12 +42,14 @@ jobs:
       - uses: docker/metadata-action@v6
         id: meta
         with:
+          images: ${{ steps.vars.outputs.image }}
           tags: |
             type=sha,format=short
             type=semver,pattern={{version}}
       - uses: docker/build-push-action@v7
         with:
-          context:
+          context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           build-args: APP_VERSION=${{ steps.vars.outputs.version }}
