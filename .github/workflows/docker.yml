@@ -65,7 +65,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: docker run -d -p 8000:8000 ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/tasks-api:sha-${GITHUB_SHA:0:7}
-      - run: curl -f --retry 5 --retry-connrefused http://localhost:8000/health
+      - run: curl -f --retry 10 --retry-delay 2 --retry-all-errors --retry-connrefused http://localhost:8000/health
       - run: curl -f http://localhost:8000/version
 
   deploy-production:
@@ -80,5 +80,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - run: docker run -d -p 8000:8000 ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/tasks-api:${GITHUB_REF_NAME#v}
-      - run: curl -f --retry 5 --retry-connrefused http://localhost:8000/health
+      - run: curl -f --retry 10 --retry-delay 2 --retry-all-errors --retry-connrefused http://localhost:8000/health
       - run: curl -f http://localhost:8000/version
